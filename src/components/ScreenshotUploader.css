@@ -1,0 +1,213 @@
+.uploader-wrapper {
+  width: 100%;
+}
+
+.dropzone {
+  border: 2px dashed var(--border);
+  border-radius: 20px;
+  padding: 48px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  cursor: pointer;
+  transition: var(--transition);
+  background: rgba(0, 0, 0, 0.2);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.dropzone::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, var(--accent-glow) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.dropzone:hover,
+.dropzone.drag-active {
+  border-color: var(--accent);
+  background: rgba(108, 99, 255, 0.05);
+  box-shadow: 0 10px 40px rgba(108, 99, 255, 0.1);
+}
+
+.dropzone.drag-active::before { opacity: 0.3; }
+
+.dropzone-icon {
+  width: 70px;
+  height: 70px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+  transition: var(--transition);
+  z-index: 1;
+}
+
+.dropzone:hover .dropzone-icon {
+  transform: translateY(-8px) rotate(5deg);
+  background: var(--accent-glow);
+  border-color: var(--accent);
+  box-shadow: 0 15px 30px rgba(108, 99, 255, 0.2);
+}
+
+.dropzone-text {
+  z-index: 1;
+}
+
+.drop-main-text {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  letter-spacing: -0.5px;
+}
+
+.drop-sub-text {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-top: 6px;
+}
+
+.drop-sub-text span {
+  color: var(--accent);
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+.dropzone-ocr-tag {
+  font-size: 0.65rem;
+  color: var(--accent2);
+  background: var(--accent2-glow);
+  border: 1px solid rgba(0, 212, 170, 0.2);
+  border-radius: 100px;
+  padding: 6px 16px;
+  font-family: var(--font-display);
+  font-weight: 900;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  z-index: 1;
+}
+
+/* ─── Preview ─── */
+.file-preview {
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.02);
+  overflow: hidden;
+  animation: fadeIn 0.4s ease;
+}
+
+.file-preview-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  background: rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid var(--border);
+}
+
+.file-info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.file-name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  max-width: 250px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.file-size {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.file-ready-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.7rem;
+  font-family: var(--font-display);
+  font-weight: 900;
+  color: var(--accent2);
+  background: var(--accent2-glow);
+  border: 1px solid rgba(0, 212, 170, 0.3);
+  border-radius: 8px;
+  padding: 6px 12px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.remove-file-btn {
+  background: rgba(255, 77, 109, 0.1);
+  border: 1px solid rgba(255, 77, 109, 0.2);
+  border-radius: 10px;
+  color: var(--danger);
+  cursor: pointer;
+  padding: 8px;
+  display: flex;
+  transition: var(--transition);
+}
+
+.remove-file-btn:hover {
+  background: var(--danger);
+  color: white;
+  transform: scale(1.1) rotate(90deg);
+}
+
+.image-preview {
+  position: relative;
+  max-height: 250px;
+  overflow: hidden;
+  background: #000;
+}
+
+.image-preview img {
+  width: 100%;
+  object-fit: contain;
+  display: block;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+.file-preview:hover .image-preview img {
+  opacity: 1;
+}
+
+.ocr-overlay {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  z-index: 2;
+}
+
+.ocr-overlay span {
+  font-size: 0.65rem;
+  font-family: var(--font-display);
+  font-weight: 900;
+  color: white;
+  background: var(--accent);
+  border-radius: 8px;
+  padding: 8px 16px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  box-shadow: 0 4px 12px rgba(108, 99, 255, 0.3);
+}
