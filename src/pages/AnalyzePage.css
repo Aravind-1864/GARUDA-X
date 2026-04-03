@@ -442,20 +442,22 @@ textarea.input-field {
 }
 
 @media (max-width: 600px) {
-  .page-title { font-size: 1.6rem; letter-spacing: -0.5px; gap: 8px; }
-  .page-desc { font-size: 0.85rem; padding: 0 10px; }
-  .step-indicator { gap: 4px; }
-  .step-circle { width: 32px; height: 32px; border-radius: 10px; font-size: 0.8rem; }
-  .step-line { width: 25px; margin: -18px 2px 0; }
-  .step span:not(.step-circle) { display: none; } /* Hide labels on very small screens to prevent overlap */
-  .glass-card.form-group { padding: 20px 16px; border-radius: 16px; }
-  .analyze-btn { font-size: 1rem; padding: 18px; border-radius: 14px; }
+  .page-header { margin-bottom: 24px; gap: 12px; }
+  .page-title { font-size: 1.4rem; letter-spacing: -0.5px; gap: 8px; }
+  .page-desc { font-size: 0.8rem; padding: 0 5px; line-height: 1.4; }
+  .step-indicator { gap: 4px; margin-top: 16px; }
+  .step-circle { width: 28px; height: 28px; border-radius: 8px; font-size: 0.75rem; }
+  .step span:not(.step-circle) { display: none; }
+  .step-line { width: 20px; margin: -14px 2px 0; }
+  .glass-card.form-group { padding: 16px; border-radius: 16px; }
+  .analyze-btn { font-size: 0.95rem; padding: 16px; border-radius: 12px; margin-top: 10px; }
+  .analyze-page { padding: 16px; padding-top: 80px; }
 }
 
 @media (max-width: 380px) {
-  .page-title { font-size: 1.4rem; }
-  .analyze-page { padding: 15px; padding-top: 80px; }
-  .step-line { width: 15px; }
+  .page-title { font-size: 1.25rem; }
+  .step-line { width: 12px; }
+  .analyze-page { padding: 12px; padding-top: 70px; }
 }
 
 @keyframes shimmer {
