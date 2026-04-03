@@ -138,17 +138,17 @@ def check_letterhead_validity(message):
     has_address = re.search(r'\b(registered office|regd\.? office|address:|plot no|floor,)\b', text_lower)
     
     if is_formal_doc:
-        # High risk if an "Offer Letter" has no registered business footprint
+        # Penalize if an "Offer Letter" has no registered business footprint (reduced from 25 to 10 for startups)
         if not has_cin and not has_gst:
-            risk_score += 25
+            risk_score += 10
             signals.append("missing official letterhead/CIN")
         elif has_cin or has_gst:
             risk_score -= 20
             signals.append("verified official letterhead details")
             
         if not has_address:
-            risk_score += 15
-            signals.append("missing registered company address")
+            risk_score += 5
+            signals.append("missing physical company address")
             
     # Even if not an offer letter, presence of CIN is a huge genuine signal
     elif has_cin or has_gst:

@@ -167,5 +167,15 @@
 @media(max-width:900px) {
     .fc-1, .fc-2 { position: static; margin: 10px auto; width: 100%; max-width: 300px; }
     .hero-cards { position: relative; margin-top: 2rem; }
-    .hero-title { font-size: 2.5rem; }
+    .hero-title { font-size: 2.2rem; line-height: 1.2; letter-spacing: -1px; }
+    .hero-subtitle { font-size: 0.95rem; line-height: 1.6; padding: 0 10px; }
+    .hero-section { padding: 4rem 1rem 2rem; }
+    .section-title { font-size: 1.6rem; }
+}
+
+@media(max-width:480px) {
+    .hero-title { font-size: 1.8rem; }
+    .btn-primary, .btn-ghost { width: 100%; justify-content: center; }
+    .hero-cta { flex-direction: column; width: 100%; max-width: 320px; }
+    .landing-page { padding-top: 50px; }
 }
