@@ -119,6 +119,44 @@ def email_domain_verification(message):
             
     return risk_score, signals
 
+def check_letterhead_validity(message):
+    """
+    Looks for official company letterhead elements (CIN, GST, Registered Address).
+    Only intensely penalizes if it's supposed to be an official Offer Letter.
+    """
+    risk_score = 0
+    signals = []
+    text_upper = message.upper()
+    text_lower = message.lower()
+    
+    # Is it claiming to be an official document?
+    is_formal_doc = re.search(r'\b(offer letter|certificate|appointment letter|letter of intent)\b', text_lower)
+    
+    # Regex for Indian Corporate Identification Number (CIN) and GSTIN
+    has_cin = re.search(r'[UL][0-9]{5}[A-Z]{2}[0-9]{4}[A-Z]{3}[0-9]{6}', text_upper)
+    has_gst = re.search(r'\b\d{2}[A-Z]{5}\d{4}[A-Z]{1}[A-Z\d]{1}[Z]{1}[A-Z\d]{1}\b', text_upper)
+    has_address = re.search(r'\b(registered office|regd\.? office|address:|plot no|floor,)\b', text_lower)
+    
+    if is_formal_doc:
+        # High risk if an "Offer Letter" has no registered business footprint
+        if not has_cin and not has_gst:
+            risk_score += 25
+            signals.append("missing official letterhead/CIN")
+        elif has_cin or has_gst:
+            risk_score -= 20
+            signals.append("verified official letterhead details")
+            
+        if not has_address:
+            risk_score += 15
+            signals.append("missing registered company address")
+            
+    # Even if not an offer letter, presence of CIN is a huge genuine signal
+    elif has_cin or has_gst:
+        risk_score -= 15
+        signals.append("verified official company registration")
+        
+    return risk_score, signals
+
 def calculate_combined_risk(message, keyword_score=0):
     """
     Combines all signals to compute a final risk score.
@@ -155,6 +193,11 @@ def calculate_combined_risk(message, keyword_score=0):
         signals.append("very short message")
     elif length_score < 0:
         signals.append("detailed professional structure")
+        
+    # Letterhead & Entity Validation
+    letterhead_score, letterhead_signals = check_letterhead_validity(message)
+    risk_score += letterhead_score
+    signals.extend(letterhead_signals)
         
     # Cap score at 100
     final_score = max(0, min(100, risk_score))

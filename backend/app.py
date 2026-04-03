@@ -139,13 +139,24 @@ def is_internship_related(text):
     matches = [kw for kw in RELEVANCE_KEYWORDS if kw in text_lower]
     return len(matches) >= 1  # At least one job-related word
 
-def find_phrases(text, keywords):
-    """Return matched keywords found in text."""
+def find_phrases(text, keywords, check_negation=True):
+    """Return matched keywords found in text. Uses basic NLP negation handling."""
     text_lower = text.lower()
     found = []
+    
+    # Words that invalidate a scam signal if they appear right before it
+    negations = [' no ', 'not ', 'never ', 'without ', 'zero ', 'does not ', 'will not ']
+    
     for kw in keywords:
-        if re.search(r'\b' + re.escape(kw) + r'\b', text_lower):
-            found.append(kw)
+        for match in re.finditer(r'\b' + re.escape(kw) + r'\b', text_lower):
+            if check_negation:
+                # Look at the 35 characters before the match (e.g. "does not charge any [fee]")
+                preceding_text = " " + text_lower[max(0, match.start() - 35):match.start()]
+                if any(neg in preceding_text for neg in negations):
+                    continue # Skip this match, it's negated!
+            
+            if kw not in found:
+                found.append(kw)
     return found
 
 def find_phrases_with_context(text, keywords, window=40):
@@ -170,8 +181,7 @@ def score_categories(text, source_platform='other'):
 
     # 1. Payment Risk
     payment_hits = find_phrases(text, PAYMENT_KEYWORDS)
-    simple_hits = [kw for kw in PAYMENT_KEYWORDS_SIMPLE
-                   if re.search(r'\b' + re.escape(kw) + r'\b', text_lower)]
+    simple_hits = find_phrases(text, PAYMENT_KEYWORDS_SIMPLE)
     payment_score = min(100, len(payment_hits) * 55 + len(simple_hits) * 20)
 
     # 2. Manipulation Language Risk
