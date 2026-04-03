@@ -75,11 +75,7 @@ const LoginPage = () => {
     }
   };
 
-  const MOCK_GOOGLE_ACCOUNTS = [
-    { email: 'aravindpujari20@gmail.com', name: 'Aravind Pujari', img: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Aravind' },
-    { email: 'dev.garuda@university.edu', name: 'Garuda Developer', img: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Dev' },
-    { email: 'guest.user@gmail.com', name: 'Guest Explorer', img: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Guest' }
-  ];
+  const MOCK_GOOGLE_ACCOUNTS = [];
 
   return (
     <div className="login-page">
@@ -189,7 +185,7 @@ const LoginPage = () => {
         </div>
       </div>
 
-      {/* Google Account Picker Modal */}
+      {/* Google Login Instructions Modal */}
       {showGoogleModal && (
         <div className="auth-modal-overlay">
           <div className="auth-modal-content google-picker animate-fade-in-up">
@@ -197,27 +193,13 @@ const LoginPage = () => {
               <img src="https://www.gstatic.com/images/branding/product/2x/googleg_48dp.png" alt="Google" width="48" />
               <button className="close-modal" onClick={() => setShowGoogleModal(false)} style={{ position: 'absolute', right: -20, top: -20 }}><X size={20} /></button>
             </div>
-            <h2>Choose an account</h2>
+            <h2>Sign in with Google</h2>
             <p className="modal-sub">to continue to <strong>Garuda X</strong></p>
             
             <div className="account-list">
-              {MOCK_GOOGLE_ACCOUNTS.map((acc) => (
-                <div key={acc.email} className="account-item" onClick={() => handleAuth({
-                  email: acc.email,
-                  name: acc.name,
-                  avatar: acc.img,
-                  provider: 'Google'
-                }, 'Google')}>
-                  <img src={acc.img} alt={acc.name} className="acc-img" />
-                  <div className="acc-info">
-                    <span className="acc-name">{acc.name}</span>
-                    <span className="acc-email">{acc.email}</span>
-                  </div>
-                </div>
-              ))}
-              <div className="account-item use-another">
+              <div className="account-item use-another" onClick={() => setShowGoogleModal(false)}>
                 <div className="acc-icon-circle"><User size={18} /></div>
-                <span>Use another account</span>
+                <span>Please use the email form on the main page for direct login.</span>
               </div>
             </div>
           </div>
