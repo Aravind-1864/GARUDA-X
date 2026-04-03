@@ -429,15 +429,33 @@ textarea.input-field {
     width: 100%; 
     justify-content: center; 
   }
+  .step { font-size: 0.6rem; letter-spacing: 1px; }
   .step-line { 
     flex: none; 
-    width: 50px; 
-    margin: -24px 10px 0; 
+    width: 40px; 
+    margin: -18px 5px 0; 
   }
   .analyze-page { 
     padding: 24px; 
     padding-top: 90px; 
   }
+}
+
+@media (max-width: 600px) {
+  .page-title { font-size: 1.6rem; letter-spacing: -0.5px; gap: 8px; }
+  .page-desc { font-size: 0.85rem; padding: 0 10px; }
+  .step-indicator { gap: 4px; }
+  .step-circle { width: 32px; height: 32px; border-radius: 10px; font-size: 0.8rem; }
+  .step-line { width: 25px; margin: -18px 2px 0; }
+  .step span:not(.step-circle) { display: none; } /* Hide labels on very small screens to prevent overlap */
+  .glass-card.form-group { padding: 20px 16px; border-radius: 16px; }
+  .analyze-btn { font-size: 1rem; padding: 18px; border-radius: 14px; }
+}
+
+@media (max-width: 380px) {
+  .page-title { font-size: 1.4rem; }
+  .analyze-page { padding: 15px; padding-top: 80px; }
+  .step-line { width: 15px; }
 }
 
 @keyframes shimmer {
