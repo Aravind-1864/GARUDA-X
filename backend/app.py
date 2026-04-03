@@ -19,12 +19,7 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from pattern_detector import calculate_combined_risk, analyze_structure
 
-reader = None
-try:
-    import easyocr
-    reader = easyocr.Reader(['en'], gpu=False, verbose=False)
-except Exception as e:
-    print(f"Could not initialize easyocr: {e}")
+# EasyOCR removed to save memory on free tier
 
 app = Flask(__name__)
 CORS(app)
@@ -466,12 +461,9 @@ def analyze_screenshot():
                 extracted_text = pytesseract.image_to_string(processed).strip()
                 if not extracted_text:
                     raise Exception("Tesseract returned empty")
-            except Exception:
-                if reader:
-                    results = reader.readtext(image)
-                    extracted_text = " ".join([t for _, t, _ in results]).strip()
-                else:
-                    extracted_text = ""
+            except Exception as e:
+                print(f"Tesseract OCR Error: {e}")
+                extracted_text = ""
         else:
             extracted_text = ""
     except Exception as e:
